@@ -2,11 +2,15 @@
   "name": "qa-playwright-relke",
   "version": "1.0.0",
   "scripts": {
+    "auth-setup": "npx ts-node setup/auth.setup.ts",
     "test": "playwright test",
-    "codegen": "playwright codegen"
+    "codegen": "playwright codegen",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
