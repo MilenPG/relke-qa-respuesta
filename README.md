@@ -5,7 +5,7 @@ Dicho esto, espero que a continuación encuentren un plan de trabajo comprensibl
 
 * * *
 
-## 🧭 PROCESO
+## 🧭 *PROCESO* 
 
 #### 1. Identificación de requerimientos
 ##### Requerimiento principal: 
@@ -71,7 +71,7 @@ Por esta razón, se optó por una alternativa válida y recomendada por la propi
 
 * * *
 
-## 🎯 CIERRE
+## 🌟 *CIERRE*
 Esta experiencia me permitió enfrentar un caso realista de automatización E2E con desafíos técnicos concretos como el manejo de reCAPTCHA y el control de asincronía en flujos complejos. A continuación, comparto una breve autoevaluación:
 
 #### ✅ Lo que funcionó bien:
@@ -83,7 +83,7 @@ Esta experiencia me permitió enfrentar un caso realista de automatización E2E 
 * Incorporar un flujo de trabajo basado en GitHub Flow, que incluya ramas, PRs y revisión de código. Si bien no se priorizó en esta ocasión por las restricciones de tiempo y la complejidad del manejo de autenticación, es una práctica fundamental que aplicaría en un contexto más amplio.
 * Agregar mayor cobertura a nivel de pruebas negativas y validaciones específicas en cada paso del flujo.
 
-#### Recursos de apoyo y aprendizaje utilizados:
+#### 📚 Recursos de apoyo y aprendizaje utilizados:
 - **Video tutoriales de Relbase:** Para conocer flujos reales del sistema.
 - **Documentación oficial de Playwright:** Fuente principal para configuración, comandos y solución de errores.
 - **DevTools (Firefox Developer Edition):** Exploración de estructura y selectores.
