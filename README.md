@@ -21,7 +21,7 @@ Dicho esto, espero que a continuación encuentren un plan de trabajo comprensibl
 * **Tipo de Prueba:** Funcional automatizada E2E
 * **Framework:** [Playwright](https://playwright.dev/) con TypeScript
 * **Diseño de pruebas:**
-![Matriz de pruebas](./docs/matriz-pruebas.png)
+![Matriz de pruebas](https://raw.githubusercontent.com/MilenPG/relke-qa-respuesta/refs/heads/main/matriz-pruebas.png)
 
 #### 3. Preparación
 ##### Datos de entrada necesarios:
