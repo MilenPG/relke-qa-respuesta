@@ -1,114 +1,95 @@
-# 🧪 QA Playwright Challenge – Relke
+# 🧪 QA Playwright Challenge Accepted 🤓 – Relke
 
-¡Bienvenido/a! Este es el desafío técnico para el proceso de selección de **QA Engineer Junior** en Relke 🚀
+En virtud de simular un contexto de trabajo lo más cercano posible, considero que promover una buena comunicación y entendimiento entre las distintas partes de un proyecto es indispensable y justamente para ello existen los estándares de calidad como los que propone ISTQB. 
+Dicho esto, espero que a continuación encuentren un plan de trabajo comprensible y consistente, que permita mantener al cliente y al resto del equipo al tanto de los procesos de validación, evitando confusiones, retrabajo y sobre todo, enfocándose en la entrega e integración continua.
 
----
+* * *
 
-## 🤔 ¿Qué buscamos?
+## 🧭 PROCESO
 
-En Relke creemos en el crecimiento desde el aprendizaje. Este desafío no busca medir cuántos años de experiencia tienes, sino **cómo aplicas tus conocimientos actuales, tu motivación por aprender y tu capacidad para enfrentar un flujo real de automatización**.
+#### 1. Identificación de requerimientos
+##### Requerimiento principal: 
+###### Validar flujo funcional E2E de creación de una Nota de Venta en sistema demo de Relbase:
+* Evaluar que el total calculado al agregar 1 o más productos sea mayor a $0.
+* Evaluar que la Nota de Venta recién creada se refleje en el listado con su total correspondiente. 
+###### Validar casos negativos:
+* Validar manejo de errores al no agregar productos.
+* Validar manejo de errores al no completar todos los campos requeridos.
 
-> 🧩 **No es excluyente si tienes menos de 1 año de experiencia.** Si estás recién egresado/a o en tus primeras experiencias laborales, ¡también puedes participar!
 
-Lo importante es que, con tu formación académica y dedicación, **puedas resolver este reto en un tiempo realista (48 horas)** y mostrar cómo piensas como QA.
+#### 2. Planificación y diseño
+* **Tipo de Prueba:** Funcional automatizada E2E
+* **Framework:** [Playwright](https://playwright.dev/) con TypeScript
+* **Diseño de pruebas:**
+![Matriz de pruebas](./docs/matriz-pruebas.png)
 
----
+#### 3. Preparación
+##### Datos de entrada necesarios:
+- Cliente
+- Dirección
+- Contacto
+- Canal de venta
+- Productos 
 
-## 🎯 Desafío
+> ⚠️ *Se intentó generar productos de prueba con stock propio, pero al no encontrarse disponible la funcionalidad correspondiente (botón/disparador) en el ambiente, se utilizaron productos existentes.*
 
-Tu misión es automatizar con Playwright el flujo de **creación de una Nota de Venta** en nuestro sistema demo:
+##### 🔥 Smoke test:
+- Se ejecutó de forma manual para validar que el entorno estuviera disponible y funcional antes de automatizar.
 
-- 🌐 URL: [https://demo.relbase.cl](https://demo.relbase.cl)
-- 👤 Usuario: `qa_junior@relke.cl`
-- 🔐 Contraseña: `Demo123456!`
+#### 4. Ejecución
+##### ¿Cómo ejecutar el test?
+* Utilizando git bash desde una carpeta ya creada:
+```bash
+# 1. Clona este repositorio e ingresa a él: 
+git clone https://github.com/milenPG/relke-qa-respuesta.git
+cd relke-qa-respuesta
 
-### Pasos mínimos esperados
+# 2. Instala las dependencias:
+npm install
 
-1. Iniciar sesión
-2. Ir a **Ventas > Notas de Venta**
-3. Hacer clic en **Crear nueva nota**
-4. Completar los datos mínimos:
-   - Seleccionar sucursal (Casa matriz)
-   - Seleccionar bodega (Principal)
-   - Seleccionar un cliente (⚠️ puede variar el nombre)
-   - Seleccionar moneda (Pesos)
-   - Agregar al menos un producto
-   - Validar que se calcula un total
-5. Guardar y verificar que aparece en el listado con el total correcto
+# 3. Realiza la autenticación semi-automática:
+npm run auth-setup 
 
----
+# 3.1. Se abrirá una instancia del navegador con las credenciales ya ingresadas
+# 3.2. MANUALMENTE resuelve el reCAPTCHA
+# 3.3. Haz clic en "Iniciar sesión"
+# 3.4. El sistema guardará el archivo `auth.json` con tu sesión activa
 
-## 💡 Reglas y condiciones especiales
+# 4. Ejecuta los tests:
+npm run test
+```
 
-- El total debe ser **mayor a $0** y reflejar el precio del producto agregado.
-- Evita usar esperas estáticas (`waitForTimeout`). Usa selectores confiables y `await expect(...)`.
-- Puedes usar Page Object Model si lo prefieres, pero no es obligatorio.
+#### 5. Resultados y observaciones
+- ✅ Se validó satisfactoriamente el flujo completo de creación de una Nota de Venta.
+- ✅ El sistema impide continuar si no se agrega al menos un producto o si hay campos obligatorios vacíos.
+###### *Observaciones:*
+- ⚠️ Fue necesario incluir esperas estáticas (waitForTimeout) en algunos puntos del flujo, ya que ciertas interacciones asincrónicas (como la carga del modal de previsualización) no respondían de forma confiable a los waitForSelector, ocasionando fallos por timeout.
 
----
+- ⚠️ Login con reCAPTCHA v3: debido a la naturaleza de este mecanismo de seguridad, no fue viable automatizarlo directamente utilizando técnicas comunes como addInitScript() o el bloqueo de scripts externos, ya que reCAPTCHA v3 opera de forma invisible y basada en heurística.
+Si bien existen servicios de terceros (como 2Captcha, Stealth, Anti-Captcha, etc.) que ofrecen soluciones para resolver estos casos de forma automatizada, todos ellos son de pago y no aplicaban dentro del alcance de esta prueba técnica.
+Por esta razón, se optó por una alternativa válida y recomendada por la propia documentación oficial de Playwright: el uso de una sesión autenticada persistente mediante storageState, lo que permitió evitar el proceso de login en cada ejecución sin comprometer la validez de las pruebas.
 
-## 📤 ¿Cómo entregar tu prueba en GitHub?
+* * *
 
-Como el repositorio original de Relke en Bitbucket es público pero de solo lectura, te pedimos que:
+## 🎯 CIERRE
+Esta experiencia me permitió enfrentar un caso realista de automatización E2E con desafíos técnicos concretos como el manejo de reCAPTCHA y el control de asincronía en flujos complejos. A continuación, comparto una breve autoevaluación:
 
-1. Clones este repo:
-   ```bash
-   git clone https://bitbucket.org/relke/relke-qa-challenge.git
-   cd relke-qa-challenge
-   ```
+#### ✅ Lo que funcionó bien:
+- Rápida familiarización con Playwright, una herramienta nueva para mí hasta este desafío.
+- Estructuración modular del código (patrón Page Object).
+- Documentación del proceso de pruebas de manera clara y reproducible.
+#### 🛠️ Oportunidades de mejora:
+* Implementar un flujo más robusto de control de sincronización, utilizando waitForResponse o locator.waitFor() en lugar de waitForTimeout.
+* Incorporar un flujo de trabajo basado en GitHub Flow, que incluya ramas, PRs y revisión de código. Si bien no se priorizó en esta ocasión por las restricciones de tiempo y la complejidad del manejo de autenticación, es una práctica fundamental que aplicaría en un contexto más amplio.
+* Agregar mayor cobertura a nivel de pruebas negativas y validaciones específicas en cada paso del flujo.
 
-2. Crees un nuevo repositorio en **tu cuenta personal de GitHub** (puede ser público o privado).
+#### Recursos de apoyo y aprendizaje utilizados:
+- **Video tutoriales de Relbase:** Para conocer flujos reales del sistema.
+- **Documentación oficial de Playwright:** Fuente principal para configuración, comandos y solución de errores.
+- **DevTools (Firefox Developer Edition):** Exploración de estructura y selectores.
+- **Playwright Codegen:** Apoyo inicial en creación de selectores.
+- **ChatGPT:** Apoyo técnico durante los bloqueos.
+- **StackOverflow y comunidades técnicas:** Para investigar sobre automatización con reCAPTCHA.
+- **ISTQB Foundation Level:** Como base metodológica de aseguramiento de calidad y pruebas estructuradas.
 
-3. Cambies el origen remoto en tu entorno local:
-   ```bash
-   git remote remove origin
-   git remote add origin https://github.com/tu_usuario/relke-qa-respuesta.git
-   git push -u origin main
-   ```
-4. Agrega tus pruebas automatizadas dentro de la carpeta `tests/`
-
-5. Crea un `README` dentro de tu repositorio explicando:
-   - Cómo ejecutar tu test
-   - Qué validaciones hiciste
-   - Qué desafíos tuviste o decisiones tomaste
-
-6. Haz commit y push 
-
-7. Comparte el link del repositorio (y acceso si es privado) por mensaje de Get on board de la postulación
-
-> Si no tienes cuenta en GitHub, puedes crear una gratuita en https://github.com
-
----
-
-## 📽️ Opcional: muestra tu forma de trabajar
-
-Si quieres destacarte, puedes grabar un video (máx 10 min) mostrando cómo trabajaste el desafío: tus pasos, pruebas, validaciones o errores encontrados.
-
----
-
-## 🧩 Bonus (opcional)
-
-Puedes agregar validaciones extra como:
-
-- Prueba negativa: ¿qué pasa si no agrego productos?
-- Validación de error de campo requerido
-- Automatización de logout o expiración de sesión
-
----
-
-## ⏱️ Tiempo estimado
-
-Tienes **48 horas** desde que recibes esta pauta.
-
----
-
-## 🧠 Consejos
-
-- Usa `npx playwright codegen` si necesitas inspiración, pero asegúrate de entender y limpiar el código generado.
-- Lee los selectores con cuidado. A veces un texto cambia según el estado.
-- Escribe como si tu test fuera a mantenerse en producción.
-- No estamos buscando perfección, sino **compromiso, criterio y capacidad de automatizar flujos funcionales reales**.
-
----
-
-¡Mucho éxito! 💥  
-Relke QA Team
+### *¡Muchas gracias por la oportunidad! 🚀*
